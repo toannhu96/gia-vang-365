@@ -11,6 +11,7 @@ import { specs } from "./config/swagger";
 import { limiter } from "@middleware/rateLimit";
 import goldPricesRouter from "@routes/goldPrices";
 import { initTelegramBot } from "@services/telegram";
+import path from "path";
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,6 +20,9 @@ app.set("trust proxy", 1);
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, "../public")));
 
 // rate limit api
 app.use(limiter);
@@ -78,5 +82,7 @@ createTerminus(server, terminusOptions);
 server.listen(PORT, () => {
   console.log(`Server is running on port :${PORT}`);
   // Initialize Telegram bot
-  initTelegramBot();
+  setTimeout(() => {
+    initTelegramBot();
+  }, 30_000);
 });

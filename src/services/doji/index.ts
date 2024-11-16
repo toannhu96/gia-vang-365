@@ -49,12 +49,8 @@ export const getDojiGoldPrices = async (): Promise<DojiResponse> => {
 
       const current = dayjs().toDate();
       return {
-        currency: {
-          dateTime: current, // goldList.IGPList[0].DateTime[0],
-          prices: goldList.IGPList[0].Row.map(parseRow),
-        },
         jewelry: {
-          dateTime: current, // goldList.JewelryList[0].DateTime[0],
+          dateTime: current,
           prices: goldList.JewelryList[0].Row.map(parseRow),
         },
       } as DojiResponse;

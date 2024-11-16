@@ -70,20 +70,21 @@ export const initTelegramBot = () => {
         return ctx.reply("Sorry, couldn't get your chat ID.");
       }
 
+      const username = ctx.chat?.username;
+      const name = String(
+        ctx.chat?.first_name || "" + " " + ctx.chat?.last_name || ""
+      ).trim();
+
       await prisma.subscribedTeleUser.upsert({
         where: { chatId },
         create: {
           chatId,
-          username: ctx.chat?.username,
-          name: String(
-            ctx.chat?.first_name || "" + " " + ctx.chat?.last_name || ""
-          ).trim(),
+          username,
+          name,
         },
         update: {
-          username: ctx.chat?.username,
-          name: String(
-            ctx.chat?.first_name || "" + " " + ctx.chat?.last_name || ""
-          ).trim(),
+          username,
+          name,
           deletedAt: null,
         },
       });

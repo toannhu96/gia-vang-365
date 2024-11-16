@@ -11,6 +11,5 @@ export interface PriceList {
 }
 
 export interface DojiResponse {
-  currency: PriceList;
   jewelry: PriceList;
 }
