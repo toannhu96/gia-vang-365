@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  app:
+    image: gia-vang-365-api
+    container_name: gia-vang-365-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - ENV=prod
+      - PORT=3000
+      - REDIS_URL=redis://localhost:6379
+      - DATABASE_URL=postgresql://user:pass@localhost:5432/db?sslmode=false
+      - TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
