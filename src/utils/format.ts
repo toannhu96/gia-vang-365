@@ -5,10 +5,9 @@ export const formatGoldPrices = (data: DojiResponse): string => {
   const { jewelry } = data;
   const dateTime = dayjs(jewelry.dateTime).format("HH:mm:ss DD/MM/YYYY");
 
-  let message = `<b>🏆 Giá vàng trong nước hôm nay</b>\n`;
+  let message = `<b>🧈 Giá vàng trong nước hôm nay</b>\n`;
   message += `<i>Cập nhật: ${dateTime}</i>\n\n`;
 
-  message += `<b>💍 Kim loại quý</b>\n`;
   message += `----------------------------------------\n`;
   jewelry.prices.forEach((price) => {
     if (price.name.includes("Giá Nguyên Liệu")) return;

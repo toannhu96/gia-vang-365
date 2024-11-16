@@ -24,14 +24,14 @@ app.use(express.json());
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, "../public")));
 
+// Add Swagger UI
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
+
 // rate limit api
 app.use(limiter);
 
 // Add the gold prices router
-app.use("/api/v1/gold-prices", goldPricesRouter);
-
-// Add Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/v1/gold-prices", goldPricesRouter);
 
 function onHealthCheck() {
   return Promise.all([
