@@ -18,3 +18,13 @@ model SubscribedTeleUser {
 
   @@map("subscribed_tele_users")
 }
+
+model GoldPriceHistory {
+  id        String   @id @default(uuid())
+  price     Float
+  isSell    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("gold_price_history")
+}

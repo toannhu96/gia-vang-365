@@ -3,12 +3,15 @@ import { getDojiGoldPrices } from "@services/doji";
 import { Context } from "telegraf";
 import { formatGoldPrices } from "../../utils/format";
 import { PrismaClient } from "@prisma/client";
+import { uuidv7 } from "uuidv7";
 import schedule from "node-schedule";
+import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
 
 export const broadcastGoldPrices = async () => {
   try {
+    console.time("Start broadcasting gold prices");
     const subscribers = await prisma.subscribedTeleUser.findMany({
       where: {
         deletedAt: null,
@@ -28,6 +31,45 @@ export const broadcastGoldPrices = async () => {
     }
   } catch (error) {
     console.error("Error broadcasting gold prices:", error);
+  } finally {
+    console.timeEnd("Start broadcasting gold prices");
+  }
+};
+
+export const snapshotGoldPrice = async () => {
+  try {
+    console.time("Start snapshot gold price");
+    const goldPrices = await getDojiGoldPrices();
+
+    const dojiHCMPrice = goldPrices.jewelry.prices.find(
+      (price) => price.name === "DOJI HCM lẻ"
+    );
+    if (!dojiHCMPrice) {
+      return;
+    }
+
+    const now = dayjs().startOf("minute").toDate();
+
+    await prisma.goldPriceHistory.createMany({
+      data: [
+        {
+          id: uuidv7(),
+          price: dojiHCMPrice.buy || 0,
+          isSell: false,
+          createdAt: now,
+        },
+        {
+          id: uuidv7(),
+          price: dojiHCMPrice.sell || 0,
+          isSell: true,
+          createdAt: now,
+        },
+      ],
+    });
+  } catch (error) {
+    console.error("Error snapshot gold price:", error);
+  } finally {
+    console.timeEnd("Start snapshot gold price");
   }
 };
 
@@ -137,7 +179,14 @@ export const initTelegramBot = () => {
   });
 
   // Schedule daily updates at 7 AM (GMT+7)
-  schedule.scheduleJob("0 7 * * *", broadcastGoldPrices);
+  const rule = new schedule.RecurrenceRule();
+  rule.hour = 7;
+  rule.minute = 0;
+  rule.tz = "Asia/Ho_Chi_Minh";
+  schedule.scheduleJob(rule, broadcastGoldPrices);
+
+  // Schedule snapshot gold price every 6 hours
+  schedule.scheduleJob("0 */6 * * *", snapshotGoldPrice);
 
   // Start the bot
   bot.launch().then(() => {

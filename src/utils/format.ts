@@ -1,5 +1,11 @@
 import { DojiResponse } from "../types/doji";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Asia/Ho_Chi_Minh");
 
 export const formatGoldPrices = (data: DojiResponse): string => {
   const { jewelry } = data;

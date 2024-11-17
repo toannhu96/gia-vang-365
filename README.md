@@ -5,6 +5,7 @@ A RESTful API service and telegram bot that provides real-time Vietnamese gold p
 ## Features
 
 - [x] Real-time Vietnamese gold price data from DOJI
+- [x] Historical gold price data
 - [x] Rate limiting (100 requests per minute)
 - [x] Redis caching (5 minutes TTL)
 - [x] Swagger documentation
@@ -19,6 +20,12 @@ A RESTful API service and telegram bot that provides real-time Vietnamese gold p
 ### Get gold prices
 ```bash
 curl --location 'https://api.giavang365.io.vn/v1/gold-prices' \
+--header 'accept: application/json'
+```
+
+### Get historical gold prices
+```bash
+curl --location 'https://api.giavang365.io.vn/v1/gold-prices/history?timerange=week' \
 --header 'accept: application/json'
 ```
 
