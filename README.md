@@ -1,6 +1,6 @@
 # Vietnamese Gold Price API
 
-A RESTful API service and telegram bot that provides real-time Vietnamese gold prices from DOJI. Free api at [https://api.giavang365.io.vn/](https://api.giavang365.io.vn/)
+A RESTful API service and telegram bot that provides real-time Vietnamese gold prices from DOJI. Free api at [https://giavang365.io.vn/](https://giavang365.io.vn/)
 
 ## Features
 
@@ -15,17 +15,17 @@ A RESTful API service and telegram bot that provides real-time Vietnamese gold p
 
 ## Docs: 
 
-[https://api.giavang365.io.vn/docs](https://api.giavang365.io.vn/docs)
+[https://giavang365.io.vn/docs](https://giavang365.io.vn/docs)
 
 ### Get gold prices
 ```bash
-curl --location 'https://api.giavang365.io.vn/v1/gold-prices' \
+curl --location 'https://giavang365.io.vn/v1/gold-prices' \
 --header 'accept: application/json'
 ```
 
 ### Get historical gold prices
 ```bash
-curl --location 'https://api.giavang365.io.vn/v1/gold-prices/history?timerange=week' \
+curl --location 'https://giavang365.io.vn/v1/gold-prices/history?timerange=week' \
 --header 'accept: application/json'
 ```
 

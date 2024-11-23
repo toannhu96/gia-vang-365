@@ -178,15 +178,16 @@ export const initTelegramBot = () => {
     }
   });
 
-  // Schedule daily updates at 7 AM (GMT+7)
-  const rule = new schedule.RecurrenceRule();
-  rule.hour = 7;
-  rule.minute = 0;
-  rule.tz = "Asia/Ho_Chi_Minh";
-  schedule.scheduleJob(rule, broadcastGoldPrices);
+  // const rule = new schedule.RecurrenceRule();
+  // rule.hour = 7;
+  // rule.minute = 0;
+  // rule.tz = "Asia/Ho_Chi_Minh";
 
-  // Schedule snapshot gold price every 6 hours
-  schedule.scheduleJob("0 */6 * * *", snapshotGoldPrice);
+  // Schedule broadcast every 12 hours
+  schedule.scheduleJob("0 */12 * * *", broadcastGoldPrices);
+
+  // Schedule snapshot gold price every 12 hours
+  schedule.scheduleJob("0 */12 * * *", snapshotGoldPrice);
 
   // Start the bot
   bot.launch().then(() => {

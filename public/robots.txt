@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: https://api.giavang365.io.vn/sitemap.xml 
+Sitemap: https://giavang365.io.vn/sitemap.xml 

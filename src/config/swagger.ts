@@ -19,7 +19,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://api.giavang365.io.vn",
+        url: "https://giavang365.io.vn",
         description: "Server production",
       },
     ],
