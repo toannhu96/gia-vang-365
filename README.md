@@ -25,7 +25,7 @@ curl --location 'https://giavang365.io.vn/v1/gold-prices' \
 
 ### Get historical gold prices
 ```bash
-curl --location 'https://giavang365.io.vn/v1/gold-prices/history?timerange=week' \
+curl --location 'https://giavang365.io.vn/v1/gold-prices/historical?timerange=week' \
 --header 'accept: application/json'
 ```
 
