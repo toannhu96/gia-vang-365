@@ -10,7 +10,9 @@ import swaggerUi from "swagger-ui-express";
 import { specs } from "./config/swagger";
 import { limiter } from "@middleware/rateLimit";
 import goldPricesRouter from "@routes/goldPrices";
+import wellKnownRouter from "@routes/wellKnown";
 import { initTelegramBot } from "@services/telegram";
+import { markdownNegotiation } from "@middleware/markdown";
 import path from "path";
 
 const PORT = process.env.PORT || 3000;
@@ -20,12 +22,26 @@ app.set("trust proxy", 1);
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
+app.use(markdownNegotiation);
+
+// Root path with Link headers for agent discovery
+app.get("/", (req, res, next) => {
+  res.setHeader(
+    "Link",
+    '</.well-known/api-catalog>; rel="api-catalog", </docs>; rel="service-doc"'
+  );
+  next();
+});
 
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Add Swagger UI
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.get("/docs-json", (req, res) => res.json(specs));
+
+// Add .well-known routes
+app.use("/.well-known", wellKnownRouter);
 
 // rate limit api
 app.use(limiter);
@@ -65,7 +81,7 @@ function onShutdown() {
 const terminusOptions = {
   signals: ["SIGINT", "SIGTERM"],
   timeout: 10000,
-  healthChecks: { "/": onHealthCheck },
+  healthChecks: { "/health": onHealthCheck },
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "OPTIONS, POST, GET",

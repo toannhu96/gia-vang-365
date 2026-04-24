@@ -2,15 +2,15 @@ import swaggerJsdoc from "swagger-jsdoc";
 
 const options = {
   definition: {
-    openapi: "3.0.0",
+    openapi: "3.1.0",
     info: {
       title: "Vietnamese Gold Price API",
       version: "1.0.0",
-      description: "API for fetching Vietnamese gold prices from DOJI",
+      description: "API for fetching Vietnamese gold prices from DOJI. Telegram Bot: https://t.me/giavang365bot",
       contact: {
         name: "Toan Nhu",
         email: "toanbk21096@gmail.com",
-        url: "https://linkedin.com/in/toannhu/",
+        url: "https://t.me/giavang365bot",
       },
       license: {
         name: "Apache 2.0",

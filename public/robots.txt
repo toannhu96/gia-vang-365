@@ -1,4 +1,6 @@
 User-agent: *
 Disallow: 
 
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
 Sitemap: https://giavang365.io.vn/sitemap.xml 
