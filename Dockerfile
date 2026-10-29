@@ -3,7 +3,11 @@ FROM node:20-alpine
 # Create app directory
 WORKDIR /app
 
-RUN apk add make curl && rm -rf /var/cache/apk/*
+# Prisma 5 only looks for libssl in /lib. Alpine 3.21+ ships it in /usr/lib,
+# so detection falls back to openssl-1.1.x and the query engine crashes (P5010).
+RUN apk add --no-cache make curl openssl \
+  && if [ -e /usr/lib/libssl.so.3 ] && [ ! -e /lib/libssl.so.3 ]; then ln -s /usr/lib/libssl.so.3 /lib/libssl.so.3; fi \
+  && if [ -e /usr/lib/libcrypto.so.3 ] && [ ! -e /lib/libcrypto.so.3 ]; then ln -s /usr/lib/libcrypto.so.3 /lib/libcrypto.so.3; fi
 
 COPY package.json .
 COPY yarn.lock .

@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
     tags: ["v*.*.*"]
-    paths: ["src/**", ".github/workflows/**", "Dockerfile"]
+    paths: ["src/**", "prisma/**", ".github/workflows/**", "Dockerfile"]
 
 env:
   REGISTRY: ghcr.io

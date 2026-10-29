@@ -1,5 +1,10 @@
+import fs from "fs";
 import dotenvx from "@dotenvx/dotenvx";
-dotenvx.config();
+
+// CapRover injects env vars. A missing .env file is expected in the image.
+if (fs.existsSync(".env")) {
+  dotenvx.config();
+}
 import express from "express";
 import http from "http";
 import cors from "cors";
